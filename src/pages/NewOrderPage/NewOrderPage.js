@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './NewOrderPage.css'
 import * as itemsAPI from '../../utilities/items-api'
 import * as ordersAPI from '../../utilities/orders-api'
@@ -14,6 +14,7 @@ export default function NewOrderPage({ user, setUser }) {
 	const [activeCat, setActiveCat] = useState('')
 	const [cart, setCart] = useState(null)
 	const categoriesRef = useRef([])
+	const navigate = useNavigate()
 
 	useEffect(function () {
 		// GET request for items
@@ -42,6 +43,22 @@ export default function NewOrderPage({ user, setUser }) {
 	// 	console.log('useEffect runs when menuItems change')
 	// }, [menuItems])
 
+	async function handleAddToOrder(itemId) {
+		const cart = await ordersAPI.addItemToCart(itemId)
+		// console.log(cart)
+		setCart(cart)
+	}
+
+	async function handleChangeQty(itemId, newQty) {
+		const updatedCart = await ordersAPI.setItemQtyInCart(itemId, newQty)
+		setCart(updatedCart)
+	}
+
+	async function handleCheckout() {
+		await ordersAPI.checkout()
+		navigate('/orders')
+	}
+
 	return (
 		<div className='NewOrderPage'>
 			<aside>
@@ -58,8 +75,9 @@ export default function NewOrderPage({ user, setUser }) {
 			</aside>
 			<MenuList
 				menuItems={menuItems.filter((item) => item.category.name === activeCat)}
+				handleAddToOrder={handleAddToOrder}
 			/>
-			<OrderDetail order={cart}/>
+			<OrderDetail order={cart} handleChangeQty={handleChangeQty} handleCheckout={handleCheckout}/>
 		</div>
 	)
 }
