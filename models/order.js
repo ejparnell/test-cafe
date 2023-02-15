@@ -57,4 +57,35 @@ orderSchema.statics.getCart = function(userId) {
     )
 }
 
+orderSchema.methods.addItemToCart = async function(itemId) {
+    const cart = this
+
+    const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId))
+
+    if (lineItem) {
+        lineItem.qty += 1
+    } else {
+        // using the mongoose.model to find an item by id
+        const item = await mongoose.model('Item').findById(itemId)
+        // once found push into the lineItems
+        cart.lineItems.push({ item })
+    }
+
+    return cart.save()
+}
+
+orderSchema.methods.setItemQty = function(itemId, newQty) {
+    const cart = this
+
+    const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId))
+
+    if (lineItem && newQty <= 0) {
+        lineItem.remove()
+    } else if (lineItem) {
+        lineItem.qty = newQty
+    }
+
+    return cart.save()
+}
+
 module.exports = mongoose.model('Order', orderSchema)
