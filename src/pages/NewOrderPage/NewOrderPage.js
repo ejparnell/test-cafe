@@ -1,14 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
-<<<<<<< HEAD
-import { Link } from 'react-router-dom'
-import './NewOrderPage.css'
-import * as itemsAPI from '../../utilities/items-api'
-=======
 import { Link, useNavigate } from 'react-router-dom'
 import './NewOrderPage.css'
 import * as itemsAPI from '../../utilities/items-api'
 import * as ordersAPI from '../../utilities/orders-api'
->>>>>>> lecture
 import Logo from '../../components/Logo/Logo'
 import MenuList from '../../components/MenuList/MenuList'
 import CategoryList from '../../components/CategoryList/CategoryList'
@@ -18,13 +12,9 @@ import UserLogOut from '../../components/UserLogOut/UserLogOut'
 export default function NewOrderPage({ user, setUser }) {
 	const [menuItems, setMenuItems] = useState([])
 	const [activeCat, setActiveCat] = useState('')
-<<<<<<< HEAD
-	const categoriesRef = useRef([])
-=======
 	const [cart, setCart] = useState(null)
 	const categoriesRef = useRef([])
 	const navigate = useNavigate()
->>>>>>> lecture
 
 	useEffect(function () {
 		// GET request for items
@@ -40,10 +30,6 @@ export default function NewOrderPage({ user, setUser }) {
 			setActiveCat(categoriesRef.current[0])
 		}
 		getItems()
-<<<<<<< HEAD
-	}, [])
-
-=======
 
 		async function getCart() {
 			const cart = await ordersAPI.getCart()
@@ -71,7 +57,6 @@ export default function NewOrderPage({ user, setUser }) {
 		navigate('/orders')
 	}
 
->>>>>>> lecture
 	// useEffect(function() {
 	// 	console.log('useEffect runs when menuItems change')
 	// }, [menuItems])
@@ -92,10 +77,6 @@ export default function NewOrderPage({ user, setUser }) {
 			</aside>
 			<MenuList
 				menuItems={menuItems.filter((item) => item.category.name === activeCat)}
-<<<<<<< HEAD
-			/>
-			<OrderDetail />
-=======
 				handleAddToOrder={handleAddToOrder}
 			/>
 			<OrderDetail
@@ -103,7 +84,6 @@ export default function NewOrderPage({ user, setUser }) {
 				handleChangeQty={handleChangeQty}
 				handleCheckout={handleCheckout}
 			/>
->>>>>>> lecture
 		</div>
 	)
 }
