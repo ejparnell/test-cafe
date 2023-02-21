@@ -1,6 +1,6 @@
 import sendRequest from './send-request'
 
-const BASE_URL = '/api/items'
+const BASE_URL = 'https://test-cafe.onrender.com/api/items'
 
 export function getAll() {
 	return sendRequest(BASE_URL)
