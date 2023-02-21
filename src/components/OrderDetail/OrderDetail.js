@@ -2,7 +2,11 @@ import './OrderDetail.css'
 import LineItem from '../LineItem/LineItem'
 
 // Used to display the details of any order, including the cart (unpaid order)
+<<<<<<< HEAD
 export default function OrderDetail({ order }) {
+=======
+export default function OrderDetail({ order, handleChangeQty, handleCheckout }) {
+>>>>>>> lecture
 	if (!order) return null
 
 	const lineItems = order.lineItems.map((item) => (
@@ -10,6 +14,10 @@ export default function OrderDetail({ order }) {
 			lineItem={item}
 			isPaid={order.isPaid}
 			key={item._id}
+<<<<<<< HEAD
+=======
+			handleChangeQty={handleChangeQty}
+>>>>>>> lecture
 		/>
 	))
 
@@ -35,7 +43,11 @@ export default function OrderDetail({ order }) {
 							) : (
 								<button
 									className='btn-sm'
+<<<<<<< HEAD
 									onClick={() => console.log('was clicked')}
+=======
+									onClick={handleCheckout}
+>>>>>>> lecture
 									disabled={!lineItems.length}>
 									CHECKOUT
 								</button>
